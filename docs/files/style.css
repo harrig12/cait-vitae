@@ -1,0 +1,280 @@
+
+/* ------- Colours --------- */
+/* pallet https://coolors.co/1d201f-3A3B37-21445a-91aec1-ffffff */
+
+:root {
+    --txt-col: #3A3B37;
+    --main-col: white;
+    --hl-col: #21445A;
+    --hovtxt-col: #91AEC1;
+    --hovbg-col: transparent;
+    --sec-col: #91AEC1;
+    --dev-col: #ffd23f;
+
+    
+    --root-font-size: 1.1em;
+    --icon-size: 1.1em;
+}
+
+
+/* ------- Fonts--------- */
+/* use google fonts for more (see header.html) */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin-top: 2em;
+  color: var(--txt-col);
+}
+
+.navbar-brand, .printOnly, 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', sans-serif;
+}
+
+.work-title {
+  font-size: 1.2em;
+  font-family: 'Raleway', sans-serif;
+}
+.work-break {
+  line-height: 200%;
+}
+
+p, li {
+  font-size: var(--root-font-size);
+  line-height: 125%;
+}
+
+a { 
+  color: var(--hl-col); 
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--hovtxt-col);
+  text-decoration: underline;
+}
+
+
+span > a { 
+  color: var(--main-col); 
+  text-decoration: none;
+}
+
+span > a:hover,
+span > a:focus {
+  color: var(--hovtxt-col);
+  text-decoration: none;
+}
+
+td {
+  font-size: var(--root-font-size);
+}
+
+/* ------- Navbar --------- */
+.navbar, .container {
+  background-color: var(--hl-col);
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:active{
+  color: var(--main-col);
+}
+
+.navbar-brand {
+  font-size: 2.75em;
+  text-transform: uppercase;
+  width: 500px;
+  padding: 14px 10px;
+  vertical-align: bottom;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus{
+  color: var(--main-col);
+  background-color: var(--hovbg-col);
+}
+
+/* NAVBAR shortcut buttons */
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:active{
+  color: var(--main-col);
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus{
+  color: var(--hovtxt-col);
+  background-color: var(--hovbg-col);
+}
+
+/* ------- TOC --------- */
+
+#TOC {
+  background: url("curie.jpg");
+  background-size: contain;
+  padding-top: 256px !important;
+  background-repeat: no-repeat; 
+  top: 10%;
+  position: fixed;
+  width: 256px;
+}
+
+.tocify {
+  border: none;
+  color: ver(--dev-col);
+  border-radius: 0px;
+}
+
+.list-group-item.active {
+    color: var(--main-col);
+    background-color: var(--hl-col);
+    border-left: none;
+    border-color: none;
+}
+
+.list-group-item:hover {
+    color: var(--hovtxt-col);
+    background-color: white;
+    border-left: solid;
+    border-color: var(--sec-col);
+}
+
+.list-group-item.active:hover{
+    color: var(--hovtxt-col);
+    background-color: var(--hl-col);
+    border-left: solid;
+    border-color: var(--sec-col);
+}
+
+.tocify-extend-page {
+  display: none;
+}
+
+/* ------- Boxes --------- */
+
+/* make code sections scroll rather than overflow, and give them a grey background */
+/* UL: 19 Nov 2018, this should've been fixed in source code now - https://github.com/rstudio/radix/commit/abbfd67146e44eb873c561cbb1fc11065788f7f8 */
+
+d-code {
+  overflow-x: auto !important;
+  background: var(--dev-col);
+}
+
+/* remove decoration on info-box */
+
+.info-box {
+  color: var(--main-col);
+  text-decoration: none;
+  background-color: var(--hl-col);
+  margin: 0;
+  line-height: 100%;
+  border: none;
+  padding: 5px 5px 0px 5px !important;
+}
+
+.info-box a {
+  color: var(--main-col);
+  text-decoration: none;
+}
+
+.info-box a:hover,
+.info-box a:focus{
+  color: var(--hovtxt-col);
+  background-color: var(--hovbg-col);
+}
+
+.info-box td {
+  margin-bottom: 0;
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+
+.info-box thead {
+  display: none;
+}
+.info-box td:first-child{
+  width: 12%;
+  text-align: center;
+  font-size: var(--icon-size);
+}
+
+/* ------- Headers --------- */
+
+/* section headers */
+h2 {
+  color: var(--hl-col);
+  margin-top: 0.9em;
+  margin-bottom: 0.4em;
+  font-size: 1.7em;
+  font-weight: medium;
+}
+
+/* ------- Tables and content --------- */
+
+.nohead thead{
+  display: none;
+}
+
+/* set width of first column in tables in Rmd with column_spec */
+
+td {
+  vertical-align: top;
+  text-align: left;
+  margin-bottom: 100px;
+  padding: 0.3em;
+}
+
+ 
+/* ------- printing options --------- */
+ 
+/* hide link destinations when printing */ 
+@media print {
+  a[href]:after {
+    content: none;
+  }
+  
+  .info-box {
+    display: none;
+    visibility: hidden;
+    margin-bottom: 0;
+  }
+  
+  body {
+    margin: 0; 
+  }
+  
+}
+
+.invisible {
+  visibility: hidden;
+  margin: 0em; 
+}
+
+.disable {
+  display: none;
+}
+
+.printTitle {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: medium;
+  font-size: 2.5em;
+  line-height: 100%;
+  font-family: 'Raleway', sans-serif;
+  margin-top: 0em;
+}
+
+.printOnly {
+  display: none;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1em;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+  padding: 0px;
+}
+
+@media print {
+  .printOnly {display: block;}
+}
+

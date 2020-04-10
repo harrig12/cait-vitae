@@ -1,0 +1,309 @@
+---
+pagetitle: "Marie Curie"
+output:
+  bookdown::html_document2:
+    css: ["files/style.css", 
+          "https://use.fontawesome.com/releases/v5.7.2/css/all.css",
+          "https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"]
+    number_sections: false
+    # when knitting to html for pdf print set toc option to false
+    toc: false
+    toc_float: true
+    selfcontained: true
+    includes:
+      in_header: "files/header.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(RefManageR)
+library(googlesheets4)
+
+# bibliography items 
+publications <- "files/curie.bib"
+
+# CV items can be read from an excel sheet
+#cv_entries <- readxl::read_xlsx("files/cv_entries.xlsx")
+#cv_entries <- subset(cv_entries, show == T)
+
+# or CV items can be read from a google sheet using the sheet id
+# use sheets_deauth() when the sheet can be viewed by anyone with the link
+googlesheets4::sheets_deauth()
+cv_entries <- googlesheets4::read_sheet("1bzHcV8x1I4Z7tOA52dkKLEh27gUR39R3NelefmdrKgw", col_types = "c")
+cv_entries <- subset(cv_entries, show == T)
+
+# all entries should have at least a year_begin and a what
+cv_entries <- subset(cv_entries, !is.na(year_begin) & !is.na(what))
+
+# general formatting
+cv_entries$year <- str_c(cv_entries$year_begin, " --- ", cv_entries$year_end)
+cv_entries[is.na(cv_entries$year), "year"] <- cv_entries[is.na(cv_entries$year), "year_begin"]
+cv_entries <- arrange(cv_entries, desc(pmax(year_end, year_begin, na.rm = T)), desc(year_begin), desc(month_begin)) 
+```
+
+```{r helpers, include=F}
+
+# formatting positions with long descriptions
+longDesc <- function(data, showDesc = F){
+  data %>%
+  mutate(what = str_c("<span class='work-title'>", 
+                      what, "</span><br> _", where, "_")) %>%
+    
+  mutate(what = ifelse(!is.na(description) & showDesc == T, 
+                       str_c(what, "<br class='work-break'>", description), what)) %>%
+  select(year, what) %>%
+  kable(escape = F) %>%
+  {tryCatch({
+    column_spec(., 1, width_min = "9em") 
+  }, error = function(e) NA)} 
+}
+
+# function to check whether a section should be hidden from output 
+dontPrint <- function(data, forceDontPrint = F){
+  # do various checks to determine if a section should be printed.
+  # setting overridePrint = T means that no matter what the results of the checks, 
+  # section will not be printed. 
+  
+  # note: even if not printed, section data will be present in the html output, just commented out.
+  # do not use this function to hide private data, as it will be accessible in the html.
+  
+  dontPrint = F
+  
+  # don't print empty sections
+  if(dim(data)[1] == 0){dontPrint = T}
+  if(is.null(data)){dontPrint = T}
+    
+  return(dontPrint | forceDontPrint)
+}
+
+```
+
+<div class="printOnly">
+<a class="printTitle">Marie Curie</a>  
+mariecurie<i class="fas fa-at fa-xs"></i>ens.fr 
+</div>
+
+
+<div>
+## Contact {.invisible}  
+</div>
+
+<div class = "row">
+<div class = "col-md-6">
+
+
+Some stuff about me:
+
+ * I poisoned myself doing research.
+ * I was the first woman to win a Nobel prize
+ * I was the first person and only woman to win a Nobel prize in two different sciences.
+ 
+ 
+</div>
+
+
+<div class = "col-md-6">
+```{block type='col-6 grid-item', echo=TRUE}
+<div class="info-box">
+
+| Center | Left |
+|:------:|:-----|
+| <i class="fas fa-map-marker-alt"></i>|School of Physics & Chemistry,\
+École Normale Supérieure|
+| <i class="fas fa-envelope"></i> | mariecurie<i class="fas fa-at fa-sm"></i>ens.fr |
+| <i class="ai ai-orcid ai-1x"></i> | [ORCID](https://orcid.org/<orcid-id>) |
+| <i class="fab fa-github"></i> | [mariecurie](https://github.com/<github-user>) |
+
+
+</div>
+```
+</div>
+</div>
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'education')) ){"<!--"}`
+***
+## Education {.nohead}
+```{r education}
+cv_entries %>% 
+  filter(type == 'education') %>% 
+  #mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
+  arrange(desc(year_end)) %>%
+  select(year, what, where) %>% 
+  kable(format = "html", align = "llr") %>% 
+  {tryCatch({
+    column_spec(., 3, italic = T, width_min = "12em") %>%
+    column_spec(1, width_min = "12em")
+  }, error = function(e) NA )}
+
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'education')) ){"-->"}`
+
+
+
+
+***
+## Publications {.nohead}
+```{r pubs-setup}
+snatchPrint <- function(bib){
+  # extract data from bibentry
+  DOIs <- bib$doi
+  refsList <- capture.output(PrintBibliography(bib))
+    
+  # add delim, and split entries
+  refsList[which(nchar(refsList) == 0)] <- "<DELIM>"
+  
+  paste0(refsList, collapse = " ") %>% 
+    strsplit(split = "<DELIM>") %>%
+    unlist() -> entries
+  
+  # bold a name
+  entries <- gsub("M Sklodowska-Curie", "__M Sklodowska-Curie__",
+                  fixed = T, entries)
+  entries <- gsub("M Curie", "__M Curie__", 
+                  fixed = T, entries)
+  
+  # remove numeric if necessary
+  entries <- gsub('\\[[[:digit:]]+\\] ', '', entries)
+  
+  # build doi link
+  links <- paste0("https://www.doi.org/", DOIs)
+  
+  return(data.frame(what = entries, paperLink = links))
+}
+
+oops <- BibOptions(bib.style = "numeric", match.author = "exact",
+                   max.names = 99, first.inits = FALSE, style = "text",
+                   no.print.fields = c("doi","url","urldate", "issn"))
+
+
+refs <- ReadBib(publications) 
+NoCite(refs)
+refs <- snatchPrint(refs)
+```
+
+`r if( dontPrint(refs) ){"<!--"}`
+```{r publications}
+refs %>% 
+  select(what) %>%
+  kable() 
+```
+`r if( dontPrint(refs) ){"-->"}`
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'talks_and_posters')) ){"<!--"}`
+*** 
+## Talks & Posters {.nohead}
+```{r talks_and_posters}
+cv_entries %>% 
+  filter(type == 'talks_and_posters') %>% 
+  mutate(what = str_c(what, ", ", where)) %>%
+  select(year_begin, what, description) %>% 
+  arrange(desc(year_begin)) %>% 
+  kable(format = "html", align = "llr") %>% 
+  {tryCatch({
+    column_spec(., 1, width_min = "4em") %>%
+    column_spec(3, width_min = "6em", italic = T) 
+  }, error = function(e) NA )}
+
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'talks_and_posters')) ){"-->"}`
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'service')) ){"<!--"}`
+***
+## Service {.nohead}
+```{r service}
+cv_entries %>% 
+  filter(type == 'service') %>% 
+  mutate(what = str_c(what, ", ", where)) %>%
+  select(what) %>% 
+  kable()
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'service')) ){"-->"}`
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'awards')) ){"<!--"}`
+***
+## Grants & Awards {.nohead}
+```{r awards}
+cv_entries %>% 
+  filter(type == 'awards') %>% 
+  select(year_begin, what) %>% 
+  arrange(desc(year_begin)) %>% 
+  kable() %>%
+  {tryCatch({
+    column_spec(., 1, width_min = "4em") 
+  }, error = function(e) NA )}
+
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'awards')) ){"-->"}`
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == "affiliations")) ){"<!--"}`
+***
+## Memberships & Affiliations {.nohead}
+```{r affiliations}
+cv_entries %>% 
+  filter(type == "affiliations") %>% 
+  longDesc() 
+```
+`r if( dontPrint(cv_entries %>% filter(type == "affiliations")) ){"-->"}`
+
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'teaching')) ){"<!--"}`
+***
+## Teaching {.nohead}
+```{r teaching}
+cv_entries %>% 
+  filter(type == 'teaching') %>% 
+  longDesc() 
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'teaching')) ){"-->"}`
+
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'work')) ){"<!--"}`
+***  
+## Selected work experience {.nohead}
+```{r work}
+cv_entries %>% 
+  filter(type == 'work') %>% 
+  longDesc()
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'work')) ){"-->"}`
+
+
+
+
+
+
+`r if( dontPrint(cv_entries %>% filter(type == 'volunteering')) ){"<!--"}`
+***
+## Personal skills & volunteering {.nohead}
+```{r volunteering}
+cv_entries %>%
+  filter(type == 'volunteering') %>%
+  longDesc(showDesc = T)
+```
+`r if( dontPrint(cv_entries %>% filter(type == 'volunteering')) ){"-->"}`
+
+

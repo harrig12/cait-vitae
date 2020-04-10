@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Marie Curie</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<!-- favicon -->
+<link rel="shortcut icon" href="files/curie.jpg">
+
+<!-- fonts -->
+
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="files/style.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html#top">Marie Curie</a>
+    </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav"></ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="index.html#contact">Contact</a>
+        </li>
+        <li>
+          <a href="index.html#publications">Publications</a>
+        </li>
+        <li>
+          <a href="index.html#teaching">Teaching</a>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div class="printOnly">
+<p><a class="printTitle">Marie Curie</a><br />
+mariecurie<i class="fas fa-at fa-xs"></i>ens.fr</p>
+</div>
+<div>
+<h2 id="contact" class="invisible">Contact</h2>
+</div>
+<div class="row">
+<div class="col-md-6">
+<p>Some stuff about me:</p>
+<ul>
+<li>I poisoned myself doing research.</li>
+<li>I was the first woman to win a Nobel prize</li>
+<li>I was the first person and only woman to win a Nobel prize in two different sciences.</li>
+</ul>
+</div>
+<div class="col-md-6">
+<div class="col-6 grid-item">
+<div class="info-box">
+<table>
+<thead>
+<tr class="header">
+<th align="center">
+Center
+</th>
+<th align="left">
+Left
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">
+<i class="fas fa-map-marker-alt"></i>
+</td>
+<td align="left">
+School of Physics &amp; Chemistry,<br />
+École Normale Supérieure
+</td>
+</tr>
+<tr class="even">
+<td align="center">
+<i class="fas fa-envelope"></i>
+</td>
+<td align="left">
+mariecurie<i class="fas fa-at fa-sm"></i>ens.fr
+</td>
+</tr>
+<tr class="odd">
+<td align="center">
+<i class="ai ai-orcid ai-1x"></i>
+</td>
+<td align="left">
+<a href="https://orcid.org/%3Corcid-id%3E">ORCID</a>
+</td>
+</tr>
+<tr class="even">
+<td align="center">
+<i class="fab fa-github"></i>
+</td>
+<td align="left">
+<a href="https://github.com/%3Cgithub-user%3E">mariecurie</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<hr />
+<div id="education" class="section level2 nohead">
+<h2>Education</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+what
+</th>
+<th style="text-align:right;">
+where
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;min-width: 12em; ">
+1889 — 1891
+</td>
+<td style="text-align:left;">
+Informal studies
+</td>
+<td style="text-align:right;min-width: 12em; font-style: italic;">
+Flying University
+</td>
+</tr>
+<tr>
+<td style="text-align:left;min-width: 12em; ">
+1894
+</td>
+<td style="text-align:left;">
+Master of Mathematics
+</td>
+<td style="text-align:right;min-width: 12em; font-style: italic;">
+Sorbonne Université
+</td>
+</tr>
+<tr>
+<td style="text-align:left;min-width: 12em; ">
+1893
+</td>
+<td style="text-align:left;">
+Master of Physics
+</td>
+<td style="text-align:right;min-width: 12em; font-style: italic;">
+Sorbonne Université
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="publications" class="section level2 nohead">
+<h2>Publications</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+what
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+E Curie. “Madame Curie: a biography”. In: <em>Doubleday, Doran</em> (1939).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E Curie, H Szyllerowa, and H Szyllerowa. “Maria Curie”. In: <em>Państwowe Wydawnictwo Naukowe</em> (1972).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “La radiologie et la guerre”. In: <em>Library of Alexandria</em> (1921).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “Pierre Curie”. In: <em>Macmillan</em> (1923).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “Radio-active substances”. In: <em>Chemical News Office</em> (1904).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “Recherches sur les substances radioactives”. In: <em>Gauthier-Villars</em> (1904).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “Sur l’étude des courbes de probabilité relatives à l’action des rayons X sur les bacilles”. In: <em>Comptes rendus l’Académie des Sci</em> (1929).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>. “Traité de radioactivité”. In: <em>Gauthier-Villars</em> (1910).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong>, A Debierne, AS Eve, H Geiger, O Hahn, SC Lind, E Rutherford, and … “The Radioactive Constants as of 1930 Report of the International Radium-Standards Commission”. In: <em>Reviews of Modern Physics</em> (1931).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Curie</strong> and Lippmann. “Rayons émis par les composés de l’uranium et du thorium”. In: <em>Gauthier-Villars</em> (1898).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P Curie and <strong>M Curie</strong>. “Sur la radioactivité provoquée par les rayons de Becquerel”. In: <em>Gauthier-Villars</em> (1899).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P Curie and <strong>M Sklodowska-Curie</strong>. “Sur une substance nouvelle radio-active, contenue dans la pechblende”. In: <em>CR Acad. Sci. Paris</em> (1898).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Sklodowska-Curie</strong>. “Radioactivité”. In: <em>Hermann</em> (1935).
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>M Sklodowska-Curie</strong>. “Sur la pénétration des rayons de Becquerel non déviables par le champ magnétique”. In: <em>CR Acad Sci</em> (1900).
+</td>
+</tr>
+</tbody>
+</table>
+<!--
+*** 
+## Talks & Posters {.nohead}
+
+```
+## [1] NA
+```
+-->
+<!--
+***
+## Service {.nohead}
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> what </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+
+  </tr>
+</tbody>
+</table>
+-->
+<hr />
+</div>
+<div id="grants-awards" class="section level2 nohead">
+<h2>Grants &amp; Awards</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year_begin
+</th>
+<th style="text-align:left;">
+what
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;min-width: 4em; ">
+1903
+</td>
+<td style="text-align:left;">
+Nobel Prize in Phisics
+</td>
+</tr>
+</tbody>
+</table>
+<!--
+***
+## Memberships & Affiliations {.nohead}
+
+```
+## [1] NA
+```
+-->
+<hr />
+</div>
+<div id="teaching" class="section level2 nohead">
+<h2>Teaching</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+what
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;min-width: 9em; ">
+1897 — 1906
+</td>
+<td style="text-align:left;">
+<span class="work-title">Lecturer in Physics</span><br> <em>École Normale Supérieure for girls, Sèvres, France</em>
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="selected-work-experience" class="section level2 nohead">
+<h2>Selected work experience</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+what
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;min-width: 9em; ">
+1919 — 1934
+</td>
+<td style="text-align:left;">
+<span class="work-title">Director</span><br> <em>Radium Institute, Paris, France</em>
+</td>
+</tr>
+</tbody>
+</table>
+<!--
+***
+## Personal skills & volunteering {.nohead}
+
+```
+## [1] NA
+```
+-->
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
