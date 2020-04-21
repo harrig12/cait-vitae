@@ -33,14 +33,14 @@ The easiest two elements to change are the main colours and fonts. I have placed
 
 The document can be rendered using `knitr`. This will output an html file. If you want a pdf output, I recommend setting `toc: false` in the yaml header of `index.html` befor knitting. Then, simply open the html file with your browser of choice, and print to pdf. Rmarkdown is great for [knitting straight to pdf](https://bookdown.org/yihui/rmarkdown/pdf-document.html), but I have set some parameters that will make the html and pdf output look more similar together if you print to pdf in this way (see `files/style.css`). Additionly, I used some html directly within index.Rmd, meaning it may be challenging to move to a different type of output without significantly changing the structure of the template. 
 
-### Output
+## Output
 
 The output looks nice as an html page, and once printed to pdf. 
 
-#### as an html webpage
+### as an html webpage
 ![](files/html_snapshot.png)
 
-#### printed to pdf
+### printed to pdf
 
 page 1| page 2
 :-------------------------:|:-------------------------:
