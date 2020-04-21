@@ -42,5 +42,6 @@ The output looks nice as an html page, and once printed to pdf.
 
 #### printed to pdf
 
+page 1| page 2
 :-------------------------:|:-------------------------:
-![](files/pdf_snapshot1.png)  |  ![](files/pdf_snapshot1.png)
+![](files/pdf_snapshot1.png)  |  ![](files/pdf_snapshot2.png)
