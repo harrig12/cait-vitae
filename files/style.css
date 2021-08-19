@@ -12,36 +12,50 @@
     --dev-col: #ffd23f;
 
     
-    --root-font-size: 1.1em;
-    --icon-size: 1.1em;
+    --root-font-size: 1em;
+    --icon-size: 0.75em;
+}
+
+/* ------- Headers --------- */
+
+/* section headers */
+
+h2 {
+  color: var(--hl-col);
+  margin-top: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 1.7em;
 }
 
 
 /* ------- Fonts--------- */
-/* use google fonts for more (see header.html) */
-
 body {
   font-family: 'Roboto', sans-serif;
   margin-top: 2em;
   color: var(--txt-col);
 }
 
-.navbar-brand, .printOnly, 
+.navbar-brand, .printHider, 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  
 }
 
+.section.level2 {margin-top: 2em;}
+
 .work-title {
-  font-size: 1.2em;
-  font-family: 'Raleway', sans-serif;
+  font-size: 0.9em;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: light;
+  font-style: bold;
 }
+
 .work-break {
-  line-height: 200%;
+  line-height: 3%;
 }
 
 p, li {
   font-size: var(--root-font-size);
-  line-height: 125%;
 }
 
 a { 
@@ -198,22 +212,22 @@ d-code {
   font-size: var(--icon-size);
 }
 
-/* ------- Headers --------- */
-
-/* section headers */
-h2 {
-  color: var(--hl-col);
-  margin-top: 0.9em;
-  margin-bottom: 0.4em;
-  font-size: 1.7em;
-  font-weight: medium;
-}
 
 /* ------- Tables and content --------- */
 
 .nohead thead{
   display: none;
 }
+
+table {
+  width: 100%;
+}
+
+
+ul, ol {
+  padding-left: 1.5em;
+}
+
 
 /* set width of first column in tables in Rmd with column_spec */
 
@@ -224,11 +238,46 @@ td {
   padding: 0.3em;
 }
 
+
+/* some sneakey things for printing */
+
+.invisible {
+  visibility: hidden;
+  margin: 0em; 
+}
+
+.disable {
+  display: none;
+}
+
+.printTitle {
+  text-align: center;
+  font-weight: medium;
+  font-size: 1.5em;
+  line-height: 70%;
+  font-family: 'Raleway', sans-serif;
+  margin-top: 0em;
+}
+
+.printHider {
+  display: none;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1em;
+  margin-top: -4em;
+  margin-bottom: -5em;
+  padding: 0px;
+
+}
+
  
-/* ------- printing options --------- */
+/* ------- PRINT exclusive options --------- */
  
 /* hide link destinations when printing */ 
 @media print {
+  
+  #TOC { display: none; }
+  
   a[href]:after {
     content: none;
   }
@@ -241,40 +290,41 @@ td {
   
   body {
     margin: 0; 
+    font-size: 0.95em;
   }
   
-}
+  /* use <div class="pagebreak"></div> to force a pagebreak in pdf if necessary */
+  .pagebreak { page-break-before: always; } 
+  
+  .section h2 {
+    color: var(--hl-col);
+    margin-top: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 0.9em;
+    font-variant-caps: small-caps;
+  }
+  
+  .section.level2 {
+    margin-top: 0.55em;
+  }
+  
+  td {
+    vertical-align: top;
+    text-align: left;
+    margin-bottom: 50px;
+    padding: 0em;
+  }
 
-.invisible {
-  visibility: hidden;
-  margin: 0em; 
+  
 }
+  
 
-.disable {
-  display: none;
-}
-
-.printTitle {
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: medium;
-  font-size: 2.5em;
-  line-height: 100%;
-  font-family: 'Raleway', sans-serif;
-  margin-top: 0em;
-}
-
-.printOnly {
-  display: none;
-  text-align: center;
-  font-weight: 500;
-  font-size: 1em;
-  margin-top: 0em;
-  margin-bottom: 0.5em;
-  padding: 0px;
-}
 
 @media print {
-  .printOnly {display: block;}
+  .printHider {display: block;}
 }
+
+
+
+
 

@@ -5,24 +5,29 @@ output:
     css: ["files/style.css", 
           "https://use.fontawesome.com/releases/v5.7.2/css/all.css",
           "https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"]
-    number_sections: false
-    # when knitting to html for pdf print set toc option to false
-    toc: false
-    toc_float: true
-    selfcontained: true
     includes:
       in_header: "files/header.html"
+    number_sections: false
+    selfcontained: true
+    toc_float: true
+    toc: true
+    
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+options(knitr.kable.NA = '')
 library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(RefManageR)
 library(googlesheets4)
 
+```
+
+
+```{r tables, include=FALSE}
 # bibliography items 
 publications <- "files/curie.bib"
 
@@ -32,59 +37,59 @@ publications <- "files/curie.bib"
 
 # or CV items can be read from a google sheet using the sheet id
 # use sheets_deauth() when the sheet can be viewed by anyone with the link
-googlesheets4::sheets_deauth()
+googlesheets4::gs4_deauth()
 cv_entries <- googlesheets4::read_sheet("1bzHcV8x1I4Z7tOA52dkKLEh27gUR39R3NelefmdrKgw", col_types = "c")
 cv_entries <- subset(cv_entries, show == T)
 
-# all entries should have at least a year_begin and a what
-cv_entries <- subset(cv_entries, !is.na(year_begin) & !is.na(what))
-
-# general formatting
-cv_entries$year <- str_c(cv_entries$year_begin, " --- ", cv_entries$year_end)
-cv_entries[is.na(cv_entries$year), "year"] <- cv_entries[is.na(cv_entries$year), "year_begin"]
-cv_entries <- arrange(cv_entries, desc(pmax(year_end, year_begin, na.rm = T)), desc(year_begin), desc(month_begin)) 
-```
-
-```{r helpers, include=F}
-
-# formatting positions with long descriptions
-longDesc <- function(data, showDesc = F){
+# formatting positions with descriptions
+longEntry <- function(data, showDesc = F){
   data %>%
   mutate(what = str_c("<span class='work-title'>", 
-                      what, "</span><br> _", where, "_")) %>%
-    
+                      what, "</span><br> <i>", where, "</i>")) %>%
   mutate(what = ifelse(!is.na(description) & showDesc == T, 
                        str_c(what, "<br class='work-break'>", description), what)) %>%
-  select(year, what) %>%
+  mutate(when = gsub(when, pattern = " --- ", replacement = " --- <br>")) %>%
+  select(when, what) %>%
   kable(escape = F) %>%
-  {tryCatch({
-    column_spec(., 1, width_min = "9em") 
-  }, error = function(e) NA)} 
+  column_spec(1, width_min = "9em") 
 }
 
-# function to check whether a section should be hidden from output 
-dontPrint <- function(data, forceDontPrint = F){
-  # do various checks to determine if a section should be printed.
-  # setting overridePrint = T means that no matter what the results of the checks, 
-  # section will not be printed. 
-  
-  # note: even if not printed, section data will be present in the html output, just commented out.
-  # do not use this function to hide private data, as it will be accessible in the html.
-  
-  dontPrint = F
-  
-  # don't print empty sections
-  if(dim(data)[1] == 0){dontPrint = T}
-  if(is.null(data)){dontPrint = T}
-    
-  return(dontPrint | forceDontPrint)
+# formatting for one-liner entries
+shortEntry <- function(data, wide = T){
+  data %>%
+    select(when, what, where) %>% 
+    kable(format = "html", align = "llr", escape = F) %>%
+    column_spec(3, italic = T) %>%
+    column_spec(2, width = "20em") %>%
+    column_spec(1, width = ifelse(wide, "12em", "6em") )
 }
 
+bestOf <- function(l){
+  # return the first non-na argument
+  #print(head(data.frame(l)))
+  r <- apply(data.frame(l), FUN = function(x){x[which(!is.na(x))][[1]]}, MAR = 1)
+  return(r)
+}
+
+# general formatting
+# all entries should have at least a year_begin and a what
+cv_entries <- arrange(cv_entries, desc(pmax(year_end, year_begin, na.rm = T)), desc(year_begin), desc(month_begin)) 
+stopifnot(all(!is.na(cv_entries$year_begin)))
+cv_entries <- cv_entries %>%  
+  mutate(month_begin = month.abb[as.numeric(month_begin)]) %>%
+  mutate(month_end = month.abb[as.numeric(month_end)]) %>%
+  mutate(when = bestOf(list(str_c(month_begin, " ", year_begin, " --- ", month_end, " ", year_end),
+                            str_c(month_begin, " ", year_begin, " --- ", year_end),
+                            str_c(year_begin, " --- ", year_end),
+                            str_c(month_begin, " ", year_begin),
+                            year_begin)))
 ```
 
-<div class="printOnly">
-<a class="printTitle">Marie Curie</a>  
-mariecurie<i class="fas fa-at fa-xs"></i>ens.fr 
+<div class="printHider">
+<span class="printTitle">Marie Curie</span>  
+<i class="fas fa-envelope"></i>: &nbsp; mariecurie<i class="fas fa-at fa-sm"></i>ens.fr  
+<i class="fab fa-github"></i>: &nbsp; [mariecurie](https://github.com/<github-user>) 
+<i class="fab fa-linkedin-in"></i>: &nbsp; [linkedin.com/marie-curie](https://www.linkedin.com/)
 </div>
 
 
@@ -125,35 +130,20 @@ Some stuff about me:
 </div>
 
 
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'education')) ){"<!--"}`
-***
 ## Education {.nohead}
+
 ```{r education}
 cv_entries %>% 
   filter(type == 'education') %>% 
-  #mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
-  arrange(desc(year_end)) %>%
-  select(year, what, where) %>% 
-  kable(format = "html", align = "llr") %>% 
-  {tryCatch({
-    column_spec(., 3, italic = T, width_min = "12em") %>%
-    column_spec(1, width_min = "12em")
-  }, error = function(e) NA )}
-
+  shortEntry()
 ```
-`r if( dontPrint(cv_entries %>% filter(type == 'education')) ){"-->"}`
 
 
-
-
-***
 ## Publications {.nohead}
-```{r pubs-setup}
+
+```{r publications}
 snatchPrint <- function(bib){
   # extract data from bibentry
-  DOIs <- bib$doi
   refsList <- capture.output(PrintBibliography(bib))
     
   # add delim, and split entries
@@ -164,146 +154,90 @@ snatchPrint <- function(bib){
     unlist() -> entries
   
   # bold a name
-  entries <- gsub("M Sklodowska-Curie", "__M Sklodowska-Curie__",
-                  fixed = T, entries)
-  entries <- gsub("M Curie", "__M Curie__", 
-                  fixed = T, entries)
+  entries <- gsub("M Sklodowska-Curie", "__M Sklodowska-Curie__", fixed = T, entries)
+  entries <- gsub("M Curie", "__M Curie__", fixed = T, entries)
   
   # remove numeric if necessary
-  entries <- gsub('\\[[[:digit:]]+\\] ', '', entries)
+  entries <- gsub('\\[[[:digit:]]\\] ', '', entries)
   
-  # build doi link
-  links <- paste0("https://www.doi.org/", DOIs)
-  
-  return(data.frame(what = entries, paperLink = links))
+  return(entries)
+
 }
 
-oops <- BibOptions(bib.style = "numeric", match.author = "exact",
-                   max.names = 99, first.inits = FALSE, style = "text",
-                   no.print.fields = c("doi","url","urldate", "issn"))
+makePubTable <- function(bib){
+  # Function to include links to papers and code, as provided in the bibliography file
+  # code link should be in the annote field of bib entries, or "NULL" if no code link.
+  
+  # reverse these to match date order of refs
+  urls <- rev(bib$url)
+  urls[is.null(urls)] <- NA
+  annotes <- rev(bib$annote)
+  annotes[is.null(annotes)] <- NA
+  
+ 
+  tibble(entry = snatchPrint(bib),
+         paperLink = unlist(urls, use.names = FALSE), 
+         codeLink = unlist(annotes, use.names = FALSE)) %>%
+    mutate(paperLink = str_c("[paper]", "(", paperLink, ")")) %>%
+    mutate(paperLink = cell_spec(paperLink, background = "var(--hl-col)",
+                            font_size = "1.2em")) %>%
+    mutate(codeLink = ifelse( (codeLink == 'NULL' | is.null(codeLink)), '', codeLink)) %>%
+    mutate(codeLink = case_when(codeLink != '' ~ str_c("[code]", "(", codeLink, ")"))) %>%
+    mutate(codeLink = case_when(codeLink != '' ~ cell_spec(codeLink, background = "var(--hl-col)",
+                                                           font_size = "1.2em")))
+    
+}
+
+oops <- BibOptions(bib.style = "numeric", match.author = "exact", 
+                   sorting = 'ydnt', max.names = 99, first.inits = FALSE, 
+                   style = "text", no.print.fields = c("doi","url","urldate", "issn"))
 
 
 refs <- ReadBib(publications) 
 NoCite(refs)
-refs <- snatchPrint(refs)
+
+
+makePubTable(refs) %>%
+    
+    # Uncomment this to remove buttons to link to papers and code
+    # (useful for printing to PDF)
+    #select(entry) %>% 
+    kable(escape = F) 
+
+
 ```
 
-`r if( dontPrint(refs) ){"<!--"}`
-```{r publications}
-refs %>% 
-  select(what) %>%
-  kable() 
-```
-`r if( dontPrint(refs) ){"-->"}`
 
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'talks_and_posters')) ){"<!--"}`
-*** 
-## Talks & Posters {.nohead}
-```{r talks_and_posters}
-cv_entries %>% 
-  filter(type == 'talks_and_posters') %>% 
-  mutate(what = str_c(what, ", ", where)) %>%
-  select(year_begin, what, description) %>% 
-  arrange(desc(year_begin)) %>% 
-  kable(format = "html", align = "llr") %>% 
-  {tryCatch({
-    column_spec(., 1, width_min = "4em") %>%
-    column_spec(3, width_min = "6em", italic = T) 
-  }, error = function(e) NA )}
-
-```
-`r if( dontPrint(cv_entries %>% filter(type == 'talks_and_posters')) ){"-->"}`
-
-
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'service')) ){"<!--"}`
-***
-## Service {.nohead}
-```{r service}
-cv_entries %>% 
-  filter(type == 'service') %>% 
-  mutate(what = str_c(what, ", ", where)) %>%
-  select(what) %>% 
-  kable()
-```
-`r if( dontPrint(cv_entries %>% filter(type == 'service')) ){"-->"}`
-
-
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'awards')) ){"<!--"}`
-***
 ## Grants & Awards {.nohead}
 ```{r awards}
 cv_entries %>% 
   filter(type == 'awards') %>% 
-  select(year_begin, what) %>% 
-  arrange(desc(year_begin)) %>% 
-  kable() %>%
-  {tryCatch({
-    column_spec(., 1, width_min = "4em") 
-  }, error = function(e) NA )}
-
+  longEntry(showDesc = T)
 ```
-`r if( dontPrint(cv_entries %>% filter(type == 'awards')) ){"-->"}`
 
 
-
-
-`r if( dontPrint(cv_entries %>% filter(type == "affiliations")) ){"<!--"}`
-***
 ## Memberships & Affiliations {.nohead}
 ```{r affiliations}
 cv_entries %>% 
   filter(type == "affiliations") %>% 
-  longDesc() 
+  shortEntry() 
 ```
-`r if( dontPrint(cv_entries %>% filter(type == "affiliations")) ){"-->"}`
 
 
-
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'teaching')) ){"<!--"}`
-***
 ## Teaching {.nohead}
 ```{r teaching}
 cv_entries %>% 
   filter(type == 'teaching') %>% 
-  longDesc() 
+  longEntry() 
 ```
-`r if( dontPrint(cv_entries %>% filter(type == 'teaching')) ){"-->"}`
 
 
-
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'work')) ){"<!--"}`
-***  
-## Selected work experience {.nohead}
+## Work experience {.nohead}
 ```{r work}
 cv_entries %>% 
   filter(type == 'work') %>% 
-  longDesc()
+  longEntry()
 ```
-`r if( dontPrint(cv_entries %>% filter(type == 'work')) ){"-->"}`
 
-
-
-
-
-
-`r if( dontPrint(cv_entries %>% filter(type == 'volunteering')) ){"<!--"}`
-***
-## Personal skills & volunteering {.nohead}
-```{r volunteering}
-cv_entries %>%
-  filter(type == 'volunteering') %>%
-  longDesc(showDesc = T)
-```
-`r if( dontPrint(cv_entries %>% filter(type == 'volunteering')) ){"-->"}`
 
 
