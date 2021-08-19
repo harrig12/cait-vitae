@@ -18,10 +18,9 @@ As of August 2021, use this format to render both my [personal webpage](https://
 ## Cons
 
 * I'm not that experienced at CSS so there are some oddities I'm still working on
-* Only possible to render either the website or the printable CV, not both at once
-  * You can work around this completely by not including a TOC in your site, but I like having it on mine so there is a tiny extra, "manual" step to switch between them
+* Only possible to render either the website or the printable CV, not both at once. You can work around this completely by not including a TOC in your site, but I like having it on mine so there is a small "manual" step to switch between them. 
 * It's not fully programmatic; you still have to put in headers by hand, and sometimes force a pagebreak, depending on your content
-* I've not done much work on making this robust against bad input in the google sheet
+* Not robust against bad input in the google sheet
 
 ## Getting started
 
