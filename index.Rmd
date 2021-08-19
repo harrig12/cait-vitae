@@ -87,7 +87,7 @@ cv_entries <- cv_entries %>%
 
 <div class="printHider">
 <span class="printTitle">Marie Curie</span>  
-<i class="fas fa-envelope"></i>: &nbsp; mariecurie<i class="fas fa-at fa-sm"></i>ens.fr  
+<i class="fas fa-envelope"></i>: &nbsp; mariecurie<i class="fas fa-at fa-sm"></i>ens.fr
 <i class="fab fa-github"></i>: &nbsp; [mariecurie](https://github.com/<github-user>) 
 <i class="fab fa-linkedin-in"></i>: &nbsp; [linkedin.com/marie-curie](https://www.linkedin.com/)
 </div>

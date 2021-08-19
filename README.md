@@ -60,6 +60,8 @@ The output looks nice as an html page, and once printed to PDF.
 
 ### printed to pdf
 
-page 1| page 2
-:-------------------------:|:-------------------------:
-![](files/pdf_snapshot1.png)  |  ![](files/pdf_snapshot2.png)
+![](files/pdf_snapshot.png)
+
+## Set up gh-pages
+
+Once rendered, you can set docs/ folder as your [publishing source for gh-pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site). 
