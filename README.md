@@ -1,5 +1,5 @@
 # cait-vitae
-General template for creating a CV in Rmarkdown, autofilled from a google sheets. 
+General template for creating an academuc CV in Rmarkdown, autofilled from a google sheets. 
 
 ## Why
 
@@ -9,16 +9,15 @@ As of August 2021, use this format to render both my [personal webpage](https://
 
 ## Pros
 
-* All CV content is managed in google sheets. This makes it fast to update, easy to maintain, and trivial to add and remove entries to customize a CV for a particular use.
+* All CV content is managed in google sheets. This makes it fast to update, easy to maintain, and trivial to add and remove entries to customize & fine tune a CV for a particular application. :dancer: :dancer: :dancer:
 * Reduce time spent trying to format an invisible table in Word by 400%
-* It keeps my website up-to-date with my CV, and they are never inconsistent 
-* All publications can be managed through bibtex
-
+* Easy to keep my website up-to-date with my CV, and they are never inconsistent 
+* All publications managed through bibtex
 
 ## Cons
 
-* I'm not that experienced at CSS so there are some oddities I'm still working on
-* Only possible to render either the website or the printable CV, not both at once. You can work around this completely by not including a TOC in your site, but I like having it on mine so there is a small "manual" step to switch between them. 
+* I'm not that experienced at CSS so there are some oddities I'm still working out
+* PDF output is not directly created. You have to render html, then print to PDF
 * It's not fully programmatic; you still have to put in headers by hand, and sometimes force a pagebreak, depending on your content
 * Not robust against bad input in the google sheet
 
