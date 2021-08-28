@@ -1,5 +1,5 @@
 # cait-vitae
-General template for creating an academic CV in Rmarkdown, autofilled from a google sheets. 
+General template for creating a data-driven academic CV in Rmarkdown, autofilled from a google sheets. 
 
 ## Why
 
