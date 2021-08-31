@@ -25,13 +25,13 @@ As of August 2021, use this format to render both my [personal webpage](https://
 
 ### Editing from the template
 
-To personalize this template to your own CV content, you will need to maintain a spreadsheet of your CV data. I use google sheets for this purpose, but excel or csv will be equally appropriate. 
+To personalize this template to your own CV content, you will need to maintain a spreadsheet of your CV data. I use google sheets for this purpose, but xlxs or csv will be equally appropriate. 
 
 The main idea is: all your CV data is in a spreadsheet (with possibly the exception of publication references), and you can select an appropriate subset of entries to show in each section by setting `show = TRUE` in the spreadsheet.
 
 1. Make a copy of the [example spreadsheet](https://docs.google.com/spreadsheets/d/1bzHcV8x1I4Z7tOA52dkKLEh27gUR39R3NelefmdrKgw/edit?usp=sharing). For ease of use, I use `gs4_deauth()`, so your sharing settings should be set such that anyone with the link can view your sheet (but it's possible to chang this to require a login). Replace the sheet ID in `index.Rmd` with your new sheet ID. Experimental: see branch [magic-hide](https://github.com/harrig12/cait-vitae/tree/magic-hide) for some sneaky use of html comments to make sections automatically appear/disappear as entries are added/removed from the spreadsheet, so long as the section is already defined in `index.html`.  
 
-1. Edit `index.Rmd` for your sections and content! In principle, I filter the cv data by section, then use `dplyr` and `knitr` to sort and arrange a table of entries. I have two formatting functions, `shortEnrty()` and `longEntry()`. I've found that the short entries sometimes need a but of custom formatting (by changing the column widths to suit the content) as in general they are more heterogeneous in nature.
+1. Edit `index.Rmd` for your sections and content! In principle, I filter the cv data by section, then use `dplyr` and `kable` to sort and arrange a table of entries. I have two formatting functions, `shortEnrty()` and `longEntry()`. I've found that the short entries sometimes need a but of custom formatting (by changing the column widths to suit the content) as in general they are more heterogeneous in nature than the long entries.
 
 1. You may wish to bold a name in the publications section. Find this in the code chunk titled "publications" in `index.Rmd`, and replace your name as appropriate. 
 
@@ -39,13 +39,11 @@ The main idea is: all your CV data is in a spreadsheet (with possibly the except
 
 ### Changing stylistic elements
 
-This template is purposely very bare-bones, intended for a quick start and minimal meddling. If you find it's not flexible enough for you, there is the [vitae package](https://cran.r-project.org/package=vitae), but this only allows PDF output.
-
-The easiest two elements to change are the main colours and fonts. I have placed all the css in `files/style.css`. There is a section that will change formatting such that it only applies to the printed PDF version of the CV. [Google fonts](https://fonts.google.com/) has a lovely interface to choose font pairings, and when you're happy with your selection, you can just link the style sheets in `files/header.html`. 
+This template is purposely very bare-bones, intended for a quick start and minimal meddling. The easiest two elements to change are the main colours and fonts. I have placed all the css in `files/style.css`. There is a section that will change formatting such that it only applies to the printed PDF version of the CV. [Google fonts](https://fonts.google.com/) has a nice interface to choose font pairings, and when you're happy with your selection, you can just link the style sheets in `files/header.html`. 
 
 ### Rendering
 
-The document can be rendered using `knitr`. This will output an html file. If you are creating a PDF CV, Set `toc: false` in the yaml header of `index.html` befor knitting. Then, simply open the html file with your browser of choice, and print to PDF. This is an unusual instruction, because Rmarkdown is great at [knitting straight to pdf](https://bookdown.org/yihui/rmarkdown/pdf-document.html). However, I've so far found that it's a lot easier to make small tweaks to CSS and html, than trying to get into the weeds of latex for this purpose. (I love latex for other things!). I have set some parameters that will make the html and pdf output look more similar together if you print to PDF after generatingt he html (see `files/style.css`). Additional, I used some html directly within index.Rmd, meaning it may be challenging to move to a different type of output without significantly changing the structure of the template. 
+The document can be rendered using `knitr`. This will output an html file. If you are creating a PDF CV, Set `toc: false` in the yaml header of `index.html` before knitting. Then, simply open the html file with your browser of choice, and print to PDF. This is an unusual instruction, because Rmarkdown is great at [knitting straight to pdf](https://bookdown.org/yihui/rmarkdown/pdf-document.html). However, I've so far found that it's a lot easier to make small tweaks to CSS and html, than trying to get into the weeds of latex for this purpose. (I love latex for other things!). I have set some parameters that will make the html and pdf output look more similar together if you print to PDF after generatingt he html (see `files/style.css`). Additionally, I used some html directly within index.Rmd, meaning it may be challenging to move to a different type of output without significantly changing the structure of the template. 
 
 In my personal use, I use the `toc: false` to toggle whether I want to output everything (ie. my CV) or a restricted set of sections (for my public webpage), in addition to set a few other web-only things (the TOC for one, but also links to my papers and code). 
 
